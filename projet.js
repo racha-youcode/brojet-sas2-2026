@@ -1,5 +1,5 @@
 const prompt = require("prompt-sync")()
-let conditats = [];
+let condidats = [];
 let choix;
 ////////////////////////////////////////////preparation/////////////////////////////////////////
 do {
@@ -7,10 +7,13 @@ do {
     console.log("1----> ajouter un nouveau candidat")
     console.log("2----> Ajouter plusieurs candidats à la fois. ")
     console.log("3---->  Afficher la liste des candidats ")
-    console.log("4---->   Voter pour un candidat  ")
-    console.log("5----> Modifier les informations d'un candidat ")
-    console.log("6----> Supprimer un candidat ")
-    console.log("7----> Rechercher des candidats ")
+    console.log("4---->  Afficher par Trier les candidats   ")
+    console.log("5---->  Afficher par Filtrer les candidats ")
+    console.log("6---->   Voter pour un candidat  ")
+    console.log("7----> Modifier l'age  d'un candidat ")
+    console.log("8----> Modifier la partipolitique d'un candidat ")
+    console.log("9----> Supprimer un candidat ")
+    console.log("10----> Rechercher des candidats ")
     console.log("0----> Quitter ")
     console.log("=========================================================")
     choix = prompt("entre votre choix:")
@@ -26,9 +29,21 @@ do {
             afficherCandidats(); break;
 
         case "4":
-            voterElecteur(); break;
+             triCondidats (condidats);
+              break;
         case "5":
-            modifierCandidat(); break;
+            //filterCandidats(); break;
+            case "6":
+            voterElecteur(); break;
+              case "7":
+            modifierageCandidat(); break;
+              case "8":
+            modifierpartipolitiqueCandidat(); break;
+              case "9":
+            m; break;
+              case "10":
+            ; break;
+
         default:
             console.log("revenu menu principal"); break;
     }
@@ -54,7 +69,7 @@ function ajouterCandidats() {
     let partipolotique = prompt("entre partipolotique:");
     let age = prompt("entre age:")
 
-    conditats.push({
+    condidats.push({
         cin: cin,
         nom: nom,
         prenom: prenom,
@@ -63,9 +78,10 @@ function ajouterCandidats() {
         electeurs: []
     })
     console.log("=====================================ajouter Candidat===========================")
-    console.log(conditats);
+    console.log(condidats);
     console.log("================================================================")
 };
+///////////////////////////////////////////////plusieurecandidats////////////////////////////////////////////////////
 function plusieuresCandidats() {
     let electeur = +prompt("entre plusieures candidats:")
 
@@ -74,39 +90,79 @@ function plusieuresCandidats() {
         ajouterCandidats();
     }
 };
+/////////////////////////////////////////////////////afficher/////////////////////////////////////////////////////////
 function afficherCandidats() {
 
 
-    console.table(conditats);
+    console.table(condidats);
 
     console.log("=========================================================================");
 
 };
+    function triCondidats (condidats){
+              
+        for(let i=0;i<condidats.length-1;i++){
+           for(let j=0;j<condidats.length-1;j++){
+               if(condidats[j].electeurs.length<condidats[j+1].electeurs.length){
+                   let temp=condidats[j];
+              condidats[j]=condidats[j+1];
+                   condidats[j+1]=temp
+              }
+       }
+      } console.table(condidats)};
+      
+/////////////////////////////////////////////////////////////voter////////////////////////////////////////////////////////////
 function voterCandidats() {
-    let cinelecteur = prompt("demande cin de candidat:")
-    for (let i = 0; i < conditats.length; i++) {
-        if (conditats[i].cin === cinelecteur) {
-            conditats[i].electeurs.push(cinelecteur)
-            console.log("voter merci!");
+    let cinCandidat=prompt("entre cin candidat qui vous voter:")
+    
+    for (let i = 0; i < condidats.length; i++) {
+        if (condidats[i].cin === cinCandidat) {
+            condidats[i].electeurs++
+            console.log("vous avez voté merci!");break;
         }
     }
-    console.log("aucun candidat ")
+    console.log(" Votre cin du candidat n'exte pas merci!" )
 
 
 
 };
 function voterElecteur() {
-    let cinelecteur = prompt("demande cin de candidat:");
-    for (let i = 0; i < conditats.length; i++) {
-        for (let j = 0; j < cinelecteur; j++) {
-            if (conditats[i].electeurs.electeurs[i] === cinelecteur) {
-                console.log("deja voter merci!");
+    let cinelecteur = prompt("etre votre cin :")
+    for (let i = 0; i < condidats.length; i++) {
+        for (let j = 0; j < condidats[i].electeurs.length; j++) {
+            if (condidats[i].cinelecteur[j] === cinelecteur) {
+                console.log(" Vous avez déjà voté et vous n'avez pas le droit de modifier votre vote ni de voter à nouveau" );break;
             }
 
         }
+        ;break;
     }
     console.log("quel est vous avez voter")
-    afficherCandidats();}
+    afficherCandidats();
+    voterCandidats();
+}
+//////////////////////////////////////////////////////////////Modifier /////////////////////////////////////////////////
+function modifierageCandidat(){
+    let agerecherche=prompt("entre le age du candidat:")
+    for(let i=0;i<condidats.length;i++){
+        if(condidats[i].age==agerecherche){
+            let neauveauage=prompt("entre le neauvau nom:")
+            condidats[i].age=neauveauage;
+        }
+        console.log("le neauvau age du candidat est modifier")
+    }
+}
+function modifierpartipolitiqueCandidat(){
+    let partipolotiquerecherche=prompt("entre la partipolotique du candidat:")
+    for(let i=0;i<condidats.length;i++){
+        if(condidats[i].partipolotique==partipolotiquerecherche){
+            let neauvaupartipolitique=prompt("entre le neauvau partipolitique:")
+            condidats[i].partipolotique=neauvaupartipolitique;
+        }
+        console.log("le neauvau partipolitique du candidat est modifier")
+    }
+}
+////////////////////////////////////////////Supprimer////////////////////////////////////////////////
 
 
 
@@ -114,9 +170,6 @@ function voterElecteur() {
 
 
 
-
-
-    
 
 //     voterCandidats();
 //     let cinCandidat = prompt("demande cin de candidat:");
@@ -151,20 +204,6 @@ function voterElecteur() {
 
 
 
-
-
-//            function triCandidats (condidats){
-//             nouveauCandidats() ;
-//       for(let i=0;i<condidats.length-1;i++){
-//          for(let j=0;j<condidats.length-1;j++){
-//              if(condidats[j].electeurs.length>condidats[j+1].electeurs.length){
-//                  let temp=condidats[j];
-//              condidats[j]=condidats[j+1];
-//                   condidats[j]=temp
-//              }
-//       }
-//      }
-//  console.log(condidats)};
 
 
 
